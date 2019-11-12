@@ -1,16 +1,15 @@
-import { Rds } from './db/rds';
-import { MatchStats } from './match-stats';
+import db from './db/rds';
 
 // This example demonstrates a NodeJS 8.10 async handler[1], however of course you could use
 // the more traditional callback-style handler.
 // [1]: https://aws.amazon.com/blogs/compute/node-js-8-10-runtime-now-available-in-aws-lambda/
 export default async (event): Promise<any> => {
 	try {
-		const rds = await Rds.getInstance();
 		console.log('input', JSON.stringify(event));
 		const reviewId = event.pathParameters && event.pathParameters.proxy;
 		console.log('getting stats for review', reviewId);
-		const results = await rds.runQuery<readonly MatchStats[]>(
+		const mysql = await db.getConnection();
+		const results = await mysql.query(
 			`
 			SELECT * FROM match_stats 
 			WHERE reviewId = '${reviewId}'
