@@ -5,9 +5,9 @@ import db from './db/rds';
 // [1]: https://aws.amazon.com/blogs/compute/node-js-8-10-runtime-now-available-in-aws-lambda/
 export default async (event): Promise<any> => {
 	try {
-		console.log('input', JSON.stringify(event));
+		// console.log('input', JSON.stringify(event));
 		const reviewId = event.pathParameters && event.pathParameters.proxy;
-		console.log('getting stats for review', reviewId);
+		// console.log('getting stats for review', reviewId);
 		const mysql = await db.getConnection();
 		const results = await mysql.query(
 			`
@@ -20,7 +20,7 @@ export default async (event): Promise<any> => {
 			isBase64Encoded: false,
 			body: JSON.stringify({ results }),
 		};
-		console.log('sending back success reponse');
+		// console.log('sending back success reponse');
 		return response;
 	} catch (e) {
 		console.error('issue retrieving stats', e);
