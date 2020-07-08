@@ -18,13 +18,16 @@ Resources:
         Type: AWS::Serverless::Function
         Properties:
             Handler: retrieve-single-match-stats.default
-            Runtime: nodejs8.10
+            # Runtime: nodejs8.10
+            Runtime: nodejs10.x
             Timeout: 180
             CodeUri: ./dist/retrieve-single-match-stats
             Policies:
                 - AWSLambdaVPCAccessExecutionRole
                 - AmazonSESFullAccess
                 - SecretsManagerReadWrite
+            Tags:
+                LambdaName: api-retrieve-review-match-stats
             Events:
                 GetSingleMatchStatsResource:
                     Type: Api
