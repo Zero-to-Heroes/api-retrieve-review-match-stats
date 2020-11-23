@@ -15,6 +15,7 @@ export default async (event): Promise<any> => {
 			WHERE reviewId = '${reviewId}'
 		`,
 		);
+		await mysql.end();
 		const response = {
 			statusCode: 200,
 			isBase64Encoded: false,
